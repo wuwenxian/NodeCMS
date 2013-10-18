@@ -1,0 +1,46 @@
+extends admin_layout
+
+block content
+	body
+		div#pageloading_bg(class='pageloading_bg')
+		div#pageloading 数据加载中，请稍等...
+		div#global_layout(class="layout",style="width:100%")
+			//----------头部--------------
+			div.header(position='top')
+				div.header_box
+					div.header_right
+						span
+							b wawik
+							|  您好，欢迎光临
+						br
+						a(href="javascript:f_addTab('home','管理中心','center.aspx')") 管理中心
+						|
+						a(target="_blank",href="../") 预览网站
+						|
+						a 安全退出
+					a.logo NodeCMS Logo
+			//----------左边------------
+			div#global_left_nav(position="left",title="管理菜单")
+				div.l-scroll(title="频道管理",iconcss="menu-icon-model")
+					ul#global_channel_tree(style="margin-top: 3px;")
+						li
+							span 资讯动态
+							ul
+								li
+									span 内容管理
+								li(url="/admin/addCate")
+									span 栏目管理
+				div(title="控制面板",iconcss="menu-icon-setting")
+					ul.nlist
+						li
+							a.l-link 系统参数设置
+						li
+							a.l-link(href="javascript:f_addTab('sys_model','系统频道设置','/admin/setting/sys_channel_list')") 系统频道设置
+			//------主体内容区--------
+			div#framecenter(position="center",toolsid="tab-tools-nav")
+				div(tabid="home",title="管理中心",iconcss="tab-icon-home",style="height: 300px")
+					iframe(frameborder="0" name="sysMain" src="center.aspx")
+			//-----底部版权信息------
+			div.footer(position="bottom")
+				div.copyright Copyright &copy; 2009 - 2012. NodeCMS.net. All Rights Reserved.
+			div.footer

@@ -1,0 +1,41 @@
+extends ../admin_layout
+
+block content
+	body.mainbody
+		form#form1(method="post")
+			div.navigation 首页 &gt; 控制面板 &gt; 系统频道
+			div.tools_box
+				div.tools_bar
+					div.search_box
+						input(type="text", id="txtKeywords",name="txtKeywords",class="txtInput")
+						input(type="button",value="搜 索",class="btnSearch")
+					a.tools_btn(href="/admin/setting/sys_channel_edit")
+						span
+							b.add 添加频道
+					a(href="javascript:void(0);",onclick="checkAll(this);" ,class="tools_btn")
+						span
+							b.all 全选
+					input(type="button",class="tools_btn",text="批量删除",onclick="return ExePostBack('btnDelete', '在删除频道之前，请确认您已经删除了该频道下的所有内容，以免造成数据冗余，确定继续删除吗？');")
+			table(width="100%",border="0",cellspacing="0",cellpadding="0" class="msgtable")
+				tr
+					th(width="6%") 选择
+					th(width="6%") 编号
+					th(align="left") 频道标题
+					th(align="left",width="12%") 频道名称
+					th(align="left",width="12%") 所属模型
+					th(width="15%") 排序
+					th(width="10%") 操作
+				-channelList.forEach(function(item){
+					tr
+						td(align="center")
+							input(type="checkbox",id="chkId",name="chkId",class="checkall")
+							input(type="hidden",name="hidId",value="#{item.id}")
+						td(align="center")=item.id
+						td=item.title
+						td=item.name
+						td=item.modelId.title
+						td(align="center")=item.sortNo
+						td(align="center") 修改
+				-})
+			div.line10
+					

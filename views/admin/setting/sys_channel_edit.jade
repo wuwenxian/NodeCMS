@@ -1,0 +1,45 @@
+extends ../admin_layout
+
+block content
+	body.mainbody
+		form#form1(method="post")
+			div.navigation
+				a(href="javascript:history.go(-1);",class="back") 后退
+				| 首页&gt;控制面板&gt;系统频道
+			div#navtips.navtips
+			div#contentTab
+				ul.tab_nav
+					li.selected
+						a(onclick="tabs('#contentTab',0);",href="javascript:;") 编辑频道信息
+				div.tab_con(style="display: block;")
+					table.form_table
+						col(width="180px")
+						tbody
+							tr
+								th 频道名称：
+								td
+									input#txtName.txtInput(name="txtName",class="txtInput normal ime-disabled",type="text")
+									span *只允许英文字母、下划线，不可重复
+							tr
+								th 频道标题：
+								td
+									input#txtTitle(name="txtTitle",class="txtInput normal required",type="text")
+									span *
+							tr
+								th 所属模型：
+								td
+									select#ddlModelId(name="ddlModelId",class="select2 required")
+										option 请选择模型
+										option(value="1") 文章模型
+										option(value="2") 商品模型
+										option(value="3") 内容模型
+							tr 
+								th 排 序：
+								td
+									input(id="txtSortNo",name="txtSortNo",class="txtInput normal small required digits",type="text")
+									span *
+							tr
+								th
+								td
+									input(type="submit",value="提交保存",class="btnSubmit")
+										

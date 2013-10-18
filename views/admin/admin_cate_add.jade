@@ -1,0 +1,77 @@
+extends admin_layout
+
+block content
+	body.mainbody
+		script(type='text/javascript').
+			//表单验证
+			$(function () {
+				$("#form1").validate({
+					invalidHandler: function (e, validator) {
+						parent.jsprint("有 " + validator.numberOfInvalids() + " 项填写有误，请检查！", "", "Warning");
+					},
+					errorPlacement: function (lable, element) {
+						//可见元素显示错误提示
+						if (element.parents(".tab_con").css('display') != 'none') {
+							element.ligerTip({ content: lable.html(), appendIdTo: lable });
+						}
+					},
+					success: function (lable) {
+						lable.ligerHideTip();
+					}
+				});
+			});
+		if success
+			script(type='text/javascript').
+				parent.jsprint("#{success}", "", "Success");
+		if error
+			script(type='text/javascript').
+				parent.jsprint("#{error}", "", "Warning");
+		form#form1(method='post')
+			div.navigation
+				a.back(href='javascript:history.go(-1);') 后退
+				首页 &gt; 类别管理 &gt; 编辑类别
+			div#contentTab
+				ul.tab_nav
+					li.selected
+						a(onclick="tabs('#contentTab',0);" href="javascript:;") 基本信息
+				div.tab_con(style="display: block;")
+					table.form_table
+						col(width="180px")
+						tbody
+							tr
+								th 排序数字：
+								td
+									input#txtSortId(name="orderNo",type="text",value="99",maxlength="10",class="txtInput small required digits valid")
+							tr
+								th 类别名称：
+								td
+									input#txtTitle(name="title",type="text",maxlength="100",class="txtInput required",style="width: 350px;")
+							tr
+								th SEO标题：
+								td
+									input#txtSeoTitle(name="seoTitle",type="text",maxlength="255",class="txtInput",style="width: 350px;")
+							tr
+								th SEO关健字：
+								td
+									textarea#txtSeoKeywords(name="seoKey",rows="2",cols="20",class="small")
+							tr
+								th SEO描述：
+								td
+									textarea#txtSeoDescription(name="seoDesc",rows="2",cols="20",class="small")
+							tr
+								th 相关图片:
+								td
+									input#photo(name="photo",type="text",maxlength="255",class="txtInput",style="width: 350px;")
+				div.foot_btn_box
+					input(type="submit",value="提交保存",id="btnSubmit",class="btnSubmit")
+					| &nbsp;
+					input(name="重置",type="reset",class="btnSubmit",value="重 置")
+									
+									
+									
+									
+									
+									
+									
+									
+									
