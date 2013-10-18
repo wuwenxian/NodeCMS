@@ -65,17 +65,20 @@ module.exports = function (app) {
 
 	//-----添加（或编辑）频道页面（get）-------
 	app.get('/admin/setting/sys_channel_edit', function (req, res) {
-		res.render('admin/setting/sys_channel_edit', {
-			title : '',
-			success : req.flash('success').toString(),
-			error : req.flash('error').toString()
+		Channel.getModelTypeList(function (docs) {
+			res.render('admin/setting/sys_channel_edit', {
+				title : '',
+				success : req.flash('success').toString(),
+				error : req.flash('error').toString(),
+				modelTypeList : docs
+			});
 		});
+
 	});
 
 	//-----添加（或编辑）频道页面（post）-------
 	app.post('/admin/setting/sys_channel_edit', function (req, res) {
 		var newChannel = {
-			// _id : 2,
 			name : req.body.txtName,
 			title : req.body.txtTitle,
 			modelId : req.body.ddlModelId,
@@ -87,7 +90,7 @@ module.exports = function (app) {
 				return res.redirect('/admin/setting/sys_channel_edit');
 			} else {
 				req.flash('success', '新增频道成功！');
-				res.redirect('/admin/setting/sys_channel_edit');
+				res.redirect('/admin/setting/sys_channel_list');
 			}
 		});
 	});

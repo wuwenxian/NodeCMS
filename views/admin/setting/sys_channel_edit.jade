@@ -30,9 +30,9 @@ block content
 								td
 									select#ddlModelId(name="ddlModelId",class="select2 required")
 										option 请选择模型
-										option(value="1") 文章模型
-										option(value="2") 商品模型
-										option(value="3") 内容模型
+										-modelTypeList.forEach(function(item){
+												option(value="#{item.id}")=item.title
+										-})										
 							tr 
 								th 排 序：
 								td

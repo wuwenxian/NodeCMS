@@ -1,26 +1,22 @@
 var util = require('util');
 var mongoose = require('./db_mongoose').getMongoose();
 var Schema = mongoose.Schema;
-var Schema2 = mongoose.Schema;
+
 var ObjectId = mongoose.Schema.ObjectId;
 
-var modelTypeSchema = new Schema2({
-		_id : ObjectId,
+var modelTypeSchema = new Schema({
+		_id : Number,
 		title : String
 	});
 
-var ModelTypeModel = mongoose.model('modelType', modelTypeSchema);
+var ModelTypeModel = mongoose.model('modeltype', modelTypeSchema);
 
 var channelSchema = new Schema({
 		_id : Number,
 		name : String,
 		title : String,
 		sortNo : Number,
-		modelId : ObjectId
-		// modelId : {
-		// type : Number,
-		// ref : 'modelType'
-		// }
+		modelId : Number
 	});
 
 var ChannelModel = mongoose.model('channel', channelSchema);
@@ -40,8 +36,6 @@ exports.add = function (channel, callback) {
 				channel._id = 1;
 			}
 			var newChannel = new ChannelModel(channel);
-			console.log(doc);
-			console.log(channel._id);
 
 			newChannel.save(function (err) {
 				if (err) {
@@ -57,15 +51,6 @@ exports.add = function (channel, callback) {
 
 //------获取频道列表------
 exports.getList = function (callback) {
-	// ChannelModel.find().sort({
-	// sortNo : 1
-	// }).populate('id').exec(function (err, docs) {
-	// if (err) {
-	// throw err;
-	// } else {
-	// callback(docs);
-	// }
-	// });
 	ChannelModel.find().sort({
 		sortNo : 1
 	}).exec(function (err, docs1) {
@@ -74,10 +59,21 @@ exports.getList = function (callback) {
 		} else {
 			ModelTypeModel.populate(docs1, {
 				path : 'modelId',
-				model : 'modelType'
+				model : 'modeltype'
 			}, function (err, docs2) {
 				callback(docs2);
 			})
+		}
+	});
+}
+
+//------获取页面模型类型模板列表-------
+exports.getModelTypeList = function (callback) {
+	ModelTypeModel.find().exec(function (err, docs) {
+		if (err) {
+			throw err;
+		} else {
+			callback(docs);
 		}
 	});
 }
