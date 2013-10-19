@@ -69,11 +69,35 @@ exports.getList = function (callback) {
 
 //------获取页面模型类型模板列表-------
 exports.getModelTypeList = function (callback) {
-	ModelTypeModel.find().exec(function (err, docs) {
+	ModelTypeModel.find().sort({
+		_id : 1
+	}).exec(function (err, docs) {
 		if (err) {
 			throw err;
 		} else {
 			callback(docs);
 		}
 	});
+}
+
+exports.addModelType = function () {
+	var arr_model = new Array({
+			_id : 1,
+			title : '文章模型'
+		}, {
+			_id : 2,
+			title : '产品模型'
+		}, {
+			_id : 3,
+			title : '内容模型'
+		});
+	var item;
+	for (item in arr_model) {
+		console.log(arr_model[item]);
+		var modelType = new ModelTypeModel(arr_model[item]);
+		modelType.save(function (err) {
+			if (err)
+				throw err;
+		});
+	}
 }

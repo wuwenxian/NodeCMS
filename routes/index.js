@@ -97,9 +97,11 @@ module.exports = function (app) {
 
 	//-------频道列表-------
 	app.get('/admin/setting/sys_channel_list', function (req, res) {
+		//为了初始化页面模型类型数据，所以加下面这一行。
+		// Channel.addModelType();
 		Channel.getList(function (docs) {
-			console.log(typeof docs);
-			console.log(docs);
+			// console.log(typeof docs);
+			// console.log(docs);
 			res.render('admin/setting/sys_channel_list', {
 				channelList : docs
 			});
