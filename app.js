@@ -23,19 +23,27 @@ app.set('view engine', 'jade');
 app.use(flash());
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser());
+// app.use(express.cookieParser());
+app.use(express.cookieParser('some secret'));
 app.use(express.session({
 		secret : settings.cookieSecret,
 		key : settings.db,
 		cookie : {
 			maxAge : 1000 * 60 * 60 * 24 * 30
-		}, //30 days
+		},
 		store : new MongoStore({
 			db : settings.db
 		})
 	}));
+
+// app.param('user', function (req, res, next, id) {
+// req.user = id;
+// next();
+// });
+
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 

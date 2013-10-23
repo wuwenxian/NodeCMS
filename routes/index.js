@@ -15,6 +15,18 @@ var Channel = require('../models/channel.js');
 module.exports = function (app) {
 	//----首页
 	app.get('/', function (req, res) {
+		// console.log(req.accepted);
+		// console.log(req.get('Connection'));
+		// console.log(req.cookies.NodeCMS);
+		// console.log(req.route);
+		// console.log(req.user);
+		// console.log(req.signedCookies.name);
+		console.log(req.session);
+		res.cookie('name', 'wuwenxian', {
+			maxAge : 900000,
+			httpOnly : true
+			// secure : true
+		});
 		res.render('index', {
 			title : 'NodeCMS by Express'
 		});
@@ -100,11 +112,13 @@ module.exports = function (app) {
 		//为了初始化页面模型类型数据，所以加下面这一行。
 		// Channel.addModelType();
 		Channel.getList(function (docs) {
-			// console.log(typeof docs);
-			// console.log(docs);
 			res.render('admin/setting/sys_channel_list', {
 				channelList : docs
 			});
 		});
-	})
+	});
+
+	// app.get('/*',function(req,res){
+	// res.status(404).sendfile('public/images/404.png');
+	// });
 }
